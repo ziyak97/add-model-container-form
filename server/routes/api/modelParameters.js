@@ -10,7 +10,7 @@ const ModelParameters = require('../../models/ModelParameters')
 router.post('/', async (req, res) => {
     try {
         const model = await Model.findOne({ modelType: req.body.modelType })
-        console.log(model)
+        
         const newModelParameters = new ModelParameters({
             modelType: model.modelType,
             parameterName: req.body.parameterName,

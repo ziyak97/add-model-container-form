@@ -14,6 +14,7 @@ app.use(express.json())
 // Define routes
 app.use('/api/models', require('./routes/api/model'))
 app.use('/api/modelParameters', require('./routes/api/modelParameters'))
+app.use('/api/containers', require('./routes/api/container'))
 
 const PORT = 5000
 
