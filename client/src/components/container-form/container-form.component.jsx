@@ -8,12 +8,46 @@ import ContainerFormModel from '../container-form-model/container-form-model.com
 import ContainerFormDetails from '../container-form-details/container-form-details.component'
 
 const ContainerForm = () => {
-    const methods = useForm();
+    const methods = useForm()
 
     const [indexes, setIndexes] = React.useState([])
     const [counter, setCounter] = React.useState(0)
 
     const [allModelTypes, setAllModelTypes] = useState([])
+
+    const submitValidation = values => {
+        const arr = []
+        let error = false
+
+        if (!values.models) {
+            error = true
+            alert('Add models!')
+            return
+        }
+
+        values.models.forEach(model => {
+            if (!model.parameters) {
+                error = true
+                alert('Each model requires atleast 1 parameter!')
+                return
+            } 
+        })
+
+        values.models.forEach(model => {
+            arr.push(parseInt(model.stepNumber)) 
+        })
+        
+        for(let i = 1; i <= values.numberOfSteps; i++) {
+            if(!arr.includes(i)) {
+                error = true
+                alert('You have to enter a model for each step!')
+                return
+            }
+        }
+        
+        return error
+
+    }
 
     const addModel = () => {
         setIndexes(prevIndexes => [...prevIndexes, counter]);
@@ -29,16 +63,19 @@ const ContainerForm = () => {
     }
 
     const onSubmit = values => {
-        if(!values.models) {
-            console.log('Add models!')
-            return
-        }
-        const filteredModelsArr = values.models.filter(model => !model.length)
-        const filteredParamsArr = values.models.forEach(model => model.params.filter(param => !param.length))
 
-        values.models = filteredModelsArr
-        values.models.params = filteredParamsArr
-        console.log(values)
+        const error = submitValidation(values)
+
+
+        if (error === false) {
+            const filteredModelsArr = values.models.filter(model => !model.length)
+            values.models.forEach((mod) => {
+                mod.parameters = mod.parameters.filter(parameter => parameter)
+            })
+
+            values.models = filteredModelsArr
+            console.log(values)
+        } else return
     }
 
     useEffect(() => {
@@ -50,35 +87,35 @@ const ContainerForm = () => {
     }, [])
 
     return (
-            <FormContext {...methods} >
-                <form onSubmit={methods.handleSubmit(onSubmit)}>
-                    <ContainerFormDetails />
+        <FormContext {...methods} >
+            <form onSubmit={methods.handleSubmit(onSubmit)}>
+                <ContainerFormDetails />
 
-                    {indexes.map(index => {
-                        const fieldName = `models[${index}]`
-                        
-                        return (
-                            <ContainerFormModel
-                                key={fieldName}
-                                fieldName={fieldName}
-                                allModelTypes={allModelTypes}
-                                index={index}
-                                removeModel={removeModel}
-                            />
-                        )
-                    })}
+                {indexes.map(index => {
+                    const fieldName = `models[${index}]`
 
-                    <button type="button" onClick={addModel}>
-                        Add Model
+                    return (
+                        <ContainerFormModel
+                            key={fieldName}
+                            fieldName={fieldName}
+                            allModelTypes={allModelTypes}
+                            index={index}
+                            removeModel={removeModel}
+                        />
+                    )
+                })}
+
+                <button type="button" onClick={addModel}>
+                    Add Model
                     </button>
 
-                    <button type="button" onClick={clearModels}>
-                        Clear Models
+                <button type="button" onClick={clearModels}>
+                    Clear Models
                     </button>
 
-                    <input type="submit" />
-                </form>
-            </FormContext>
+                <input type="submit" />
+            </form>
+        </FormContext>
     )
 }
 

@@ -1,0 +1,34 @@
+.container-form-model__param-buttons {
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    top: -20px;
+}
+
+.container-form-model__label {
+    color: white;
+    margin-top: 3px;
+    font-size: 14px;
+    font-weight: 200;
+}
+
+.container-form-model__param-container {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+}
+
+.container-form-model__param-input, .container-form-model__param-remove {
+    margin: 0;
+}
+
+.container-form-model__param-input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.container-form-model__param-remove {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    height: 43px;
+}
