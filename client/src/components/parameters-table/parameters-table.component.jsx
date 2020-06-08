@@ -15,8 +15,8 @@ const ParameterTable = () => {
         getModels()
     }, [])
     return (
-        <div>
-            <Table striped bordered hover>
+        <div style={{ overflow: 'scroll' }}>
+            <Table style={{ backgroundColor: 'white' }} striped bordered hover>
                 <thead>
                     <tr>
                         <th>Model Type</th>

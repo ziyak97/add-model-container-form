@@ -13,20 +13,20 @@ router.post('/', async (req, res) => {
             numberOfSteps,
             models
         } = req.body
-    
+
         const newContainer = new Container({
             containerName,
             numberOfSteps,
             models
         })
         const container = await newContainer.save()
-        
+
         res.json(container)
     } catch (err) {
         console.error(err.message)
         res.status(500).send('Server Error')
     }
-    
+
 })
 
 // @route    GET api/containers
@@ -35,6 +35,20 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     const container = await Container.find()
     res.json(container)
+})
+
+// @route    DELETE api/containers/:id
+// @desc     Delete a container
+// @access   Public
+router.delete('/:id', async (req, res) => {
+    const id = req.params.id
+
+    try {
+        await Container.findByIdAndDelete(id)
+    } catch (e) {
+        console.error(e)
+    }
+
 })
 
 module.exports = router

@@ -15,10 +15,12 @@ function App() {
     <div>
       <ContainerForm />
       <ContainerTable />
-      {/* <ModelForm />
-      <ParametersForm />
+  
       <ModelTable />
-      <ParameterTable /> */}
+      <ParameterTable />
+
+      <ModelForm />
+      <ParametersForm />
     </div>
   )
 }

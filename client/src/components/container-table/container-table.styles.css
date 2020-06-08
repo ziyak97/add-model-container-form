@@ -1,0 +1,11 @@
+.container-table__button-remove {
+    background-color: #8E0003;
+    position: relative;
+    top: -55px;
+    color: white;
+    width: 100%;
+}
+
+.container-table {
+    margin-top: 70px;
+}
