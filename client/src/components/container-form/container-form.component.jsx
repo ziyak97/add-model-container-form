@@ -44,6 +44,14 @@ const ContainerForm = () => {
                 return
             }
         }
+
+        arr.forEach(param => {
+            if(param > values.numberOfSteps) {
+                error = true
+                alert('You have entered a model step number greater than total steps of the N-Model!')
+                return
+            }
+        })
         
         return error
 
@@ -79,6 +87,7 @@ const ContainerForm = () => {
                 await axios.post('http://localhost:5000/api/containers', values)
                 alert('Form submitted')
                 e.target.reset()
+                clearModels()
             } catch (e) {
                 console.error(e.message)
                 alert('Error submitting form! Please try again!')

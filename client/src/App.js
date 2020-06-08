@@ -1,6 +1,7 @@
 import React from 'react'
 
 import ContainerForm from './components/container-form/container-form.component'
+import ContainerTable from './components/container-table/container-table.component'
 import ModelForm from './components/model-form/model-form.component'
 import ParametersForm from './components/parameters-form/parameters-form.component'
 import ModelTable from './components/model-table/model-table.component'
@@ -13,6 +14,7 @@ function App() {
   return (
     <div>
       <ContainerForm />
+      <ContainerTable />
       {/* <ModelForm />
       <ParametersForm />
       <ModelTable />

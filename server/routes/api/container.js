@@ -29,4 +29,12 @@ router.post('/', async (req, res) => {
     
 })
 
+// @route    GET api/containers
+// @desc     Get all container
+// @access   Public
+router.get('/', async (req, res) => {
+    const container = await Container.find()
+    res.json(container)
+})
+
 module.exports = router
