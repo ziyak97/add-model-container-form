@@ -62,7 +62,7 @@ const ContainerForm = () => {
         setIndexes([]);
     }
 
-    const onSubmit = values => {
+    const onSubmit = async (values, e) => {
 
         const error = submitValidation(values)
 
@@ -74,7 +74,16 @@ const ContainerForm = () => {
             })
 
             values.models = filteredModelsArr
-            console.log(values)
+
+            try {
+                await axios.post('http://localhost:5000/api/containers', values)
+                alert('Form submitted')
+                e.target.reset()
+            } catch (e) {
+                console.error(e.message)
+                alert('Error submitting form! Please try again!')
+            }
+     
         } else return
     }
 

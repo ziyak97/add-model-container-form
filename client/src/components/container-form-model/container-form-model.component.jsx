@@ -57,6 +57,7 @@ const ContainerFormModel = ({ fieldName, allModelTypes, removeModel, index }) =>
                                         name={`${fieldName}`}
                                         ref={register}
                                         placeholder="Enter parameter"
+                                        required
                                     />
 
                                     <button
