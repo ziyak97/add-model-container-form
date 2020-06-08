@@ -132,7 +132,7 @@ const ContainerForm = () => {
                     Clear Models
                     </button>
 
-                <input type="submit" />
+                <input style={{fontWeight: 'bold'}} type="submit" />
             </form>
         </FormContext>
     )
