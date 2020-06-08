@@ -18,13 +18,14 @@ const ContainerForm = () => {
     const submitValidation = values => {
         const arr = []
         let error = false
-
+        // Checks if we entered any models
         if (!values.models) {
             error = true
             alert('Add models!')
             return
         }
 
+        // Checks each model has atleast 1 parameter
         values.models.forEach(model => {
             if (!model.parameters) {
                 error = true
@@ -33,10 +34,12 @@ const ContainerForm = () => {
             } 
         })
 
+        // Pushes parameters into arr
         values.models.forEach(model => {
             arr.push(parseInt(model.stepNumber)) 
         })
         
+        // Checks if model if entered for each step
         for(let i = 1; i <= values.numberOfSteps; i++) {
             if(!arr.includes(i)) {
                 error = true
@@ -45,6 +48,7 @@ const ContainerForm = () => {
             }
         }
 
+        // Checks if model step number is greater than total steps of n-model
         arr.forEach(param => {
             if(param > values.numberOfSteps) {
                 error = true
@@ -58,16 +62,16 @@ const ContainerForm = () => {
     }
 
     const addModel = () => {
-        setIndexes(prevIndexes => [...prevIndexes, counter]);
-        setCounter(prevCounter => prevCounter + 1);
+        setIndexes(prevIndexes => [...prevIndexes, counter])
+        setCounter(prevCounter => prevCounter + 1)
     }
 
     const removeModel = index => () => {
-        setIndexes(prevIndexes => [...prevIndexes.filter(model => model !== index)]);
+        setIndexes(prevIndexes => [...prevIndexes.filter(model => model !== index)])
     }
 
     const clearModels = () => {
-        setIndexes([]);
+        setIndexes([])
     }
 
     const onSubmit = async (values, e) => {
