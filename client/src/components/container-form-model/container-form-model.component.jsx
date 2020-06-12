@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
 
 import { ConnectForm } from '../connect-form/connect-form.component';
 
@@ -7,6 +8,8 @@ import './container-form-model.styles.css'
 const ContainerFormModel = ({ fieldName, allModelTypes, removeModel, index }) => {
     const [indexesParams, setIndexesParams] = React.useState([])
     const [counterParams, setCounterParams] = React.useState(0)
+    const [modelName, setModelName] = useState([])
+    const [modelNameType, setModelNameType] = useState('')
 
     const addParam = () => {
         setIndexesParams(prevIndexesParams => [...prevIndexesParams, counterParams]);
@@ -20,14 +23,44 @@ const ContainerFormModel = ({ fieldName, allModelTypes, removeModel, index }) =>
     const clearParams = () => {
         setIndexesParams([]);
     }
+
+    const handleModelChange = async e => {
+        try {
+            const { value } = e.target
+            const data = await axios.get(`http://localhost:5000/api/modelParameters/${value}`)
+            console.log(data.data)
+            setModelName(data.data)
+        } catch (e) {
+            console.error(e.message)
+        }
+    }
+
+    const handleModelNameChange = e => {
+        const regex = /(?<=\[).+?(?=\])/
+        const {value} = e.target
+        const res = regex.exec(value)
+        setModelNameType(res[0])
+    }
+
     return (
         <ConnectForm>
             {({ register, errors }) =>
                 (<fieldset className='container-form__field' name={fieldName}>
                     <label>Select Model Type
-                        <select name={`${fieldName}.modelType`} required ref={register({ required: true })}>
-                            {allModelTypes.map((modelType, index) => (
+                        <select defaultValue='DEFAULT' onChange={handleModelChange} name={`${fieldName}.modelType`} required ref={register({ required: true })}>
+                            <option value='DEFAULT' disabled>Choose model type here</option>
+                            {allModelTypes.filter((model, index) => allModelTypes.indexOf(model) === index).map((modelType, index) => (
                                 <option key={index}>{modelType}</option>
+                            ))}
+                        </select>
+                    </label>
+                    {errors.modelType && <span>This field is required</span>}
+
+                    <label>Select Model
+                        <select defaultValue='DEFAULT' onChange={handleModelNameChange}  name={`${fieldName}.modelName`} required ref={register({ required: true })}>
+                            <option value='DEFAULT' disabled>Choose model here</option>
+                            {modelName.map((name) => (
+                                <option key={name._id}>{name.displayName} [{name.type}]</option>
                             ))}
                         </select>
                     </label>
@@ -42,7 +75,7 @@ const ContainerFormModel = ({ fieldName, allModelTypes, removeModel, index }) =>
                     {errors.stepNumber && <span>This field is required</span>}
 
 
-
+                    {modelNameType && <p>Please add parameters of {modelNameType} type</p>}
 
                     <span className='container-form-model__label'>Enter Parameters</span>
                     {indexesParams.map(indexParam => {

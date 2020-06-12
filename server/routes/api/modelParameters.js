@@ -40,4 +40,17 @@ router.get('/', async (req, res) => {
     res.json(modelParameters)
 })
 
+// @route    GET api/modelParameters/:modelType
+// @desc     Get all modelParameters from modelType
+// @access   Public
+router.get('/:modelType', async (req, res) => {
+    try {
+        const modelParameters = await ModelParameters.find({modelType: req.params.modelType})
+        res.json(modelParameters)
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).send('Server Error')
+    }
+})
+
 module.exports = router
