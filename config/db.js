@@ -1,8 +1,8 @@
-require('dotenv').config()
+if (process.env.NODE_ENV !== 'production') { require('dotenv').config() }
 const mongoose = require('mongoose')
 
 const connectDB = async () => {
-    const db = process.env.MONGO_URI
+	const db = process.env.MONGO_URI
 	try {
 		await mongoose.connect(db, {
 			useNewUrlParser: true,
