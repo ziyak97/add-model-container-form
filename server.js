@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const path = require('path')
 const connectDb = require('./config/db')
 
 const app = express()
@@ -10,6 +11,14 @@ connectDb()
 // Initilize middleware
 app.use(cors())
 app.use(express.json())
+
+// If production serve static files
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname + 'client/build')))
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
+    })
+}
 
 // Define routes
 app.use('/api/models', require('./routes/api/model'))
