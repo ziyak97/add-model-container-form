@@ -12,18 +12,19 @@ connectDb()
 app.use(cors())
 app.use(express.json())
 
-// If production serve static files
-if(process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'client/build')))
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
-    })
-}
-
 // Define routes
 app.use('/api/models', require('./routes/api/model'))
 app.use('/api/modelParameters', require('./routes/api/modelParameters'))
 app.use('/api/containers', require('./routes/api/container'))
+
+// If production serve static files
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'client/build')))
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    })
+}
 
 const PORT = process.env.PORT || 5000
 
