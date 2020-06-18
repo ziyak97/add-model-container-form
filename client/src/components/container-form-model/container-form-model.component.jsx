@@ -27,7 +27,7 @@ const ContainerFormModel = ({ fieldName, allModelTypes, removeModel, index }) =>
     const handleModelChange = async e => {
         try {
             const { value } = e.target
-            const data = await axios.get(`http://localhost:5000/api/modelParameters/${value}`)
+            const data = await axios.get(`/api/modelParameters/${value}`)
             console.log(data.data)
             setModelName(data.data)
         } catch (e) {

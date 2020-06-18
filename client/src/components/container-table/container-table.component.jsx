@@ -10,13 +10,13 @@ const ContainerTable = () => {
     const [allParameters, setAllParameters] = useState([])
 
     const handleDelete = async (id) => {
-        axios.delete(`http://localhost:5000/api/containers/${id}`)
+        axios.delete(`/api/containers/${id}`)
         alert('Container Deleted!')
     }
 
     useEffect(() => {
         const getModels = async () => {
-            const containers = await axios.get('http://localhost:5000/api/containers')
+            const containers = await axios.get('/api/containers')
             console.log(containers.data)
             setAllParameters(containers.data)
         }

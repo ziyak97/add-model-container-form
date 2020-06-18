@@ -9,7 +9,7 @@ const ParametersForm = () => {
     const [allModelTypes, setAllModelTypes] = useState([])
     useEffect(() => {
         const getModels = async () => {
-            const models = await axios.get('http://localhost:5000/api/models')
+            const models = await axios.get('/api/models')
             models.data.forEach(model => setAllModelTypes(prevState => [...prevState, model.modelType]))
         }
         getModels()
@@ -17,7 +17,7 @@ const ParametersForm = () => {
     const onSubmit = async data => {
         try {
             console.log(data)
-            await axios.post('http://localhost:5000/api/modelParameters', data)
+            await axios.post('/api/modelParameters', data)
         } catch (e) {
             console.error(e)
         }

@@ -8,7 +8,7 @@ const ModelForm = () => {
     const { register, handleSubmit, errors } = useForm()
     const onSubmit = async data => {
         try {
-            await axios.post('http://localhost:5000/api/models', data)
+            await axios.post('/api/models', data)
         } catch (e) {
             console.error(e)
         }

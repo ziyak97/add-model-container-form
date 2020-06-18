@@ -8,7 +8,7 @@ const ParameterTable = () => {
     const [allParameters, setAllParameters] = useState([])
     useEffect(() => {
         const getModels = async () => {
-            const models = await axios.get('http://localhost:5000/api/modelParameters')
+            const models = await axios.get('/api/modelParameters')
             console.log(models)
             setAllParameters(models.data)
         }

@@ -88,7 +88,7 @@ const ContainerForm = () => {
             values.models = filteredModelsArr
 
             try {
-                await axios.post('http://localhost:5000/api/containers', values)
+                await axios.post('/api/containers', values)
                 alert('Form submitted')
                 e.target.reset()
                 clearModels()
@@ -102,7 +102,7 @@ const ContainerForm = () => {
 
     useEffect(() => {
         const getModels = async () => {
-            const models = await axios.get('http://localhost:5000/api/models')
+            const models = await axios.get('/api/models')
             models.data.forEach(model => setAllModelTypes(prevState => [...prevState, model.modelType]))
         }
         getModels()
